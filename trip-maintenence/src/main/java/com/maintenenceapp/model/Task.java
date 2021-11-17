@@ -1,4 +1,4 @@
-package com.resources.model;
+package com.maintenenceapp.model;
 
 
 import java.time.LocalDate;
@@ -58,7 +58,6 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private Status taskStatus;
 	
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "task")
 	private Set<Workers> resourcesList;
 	

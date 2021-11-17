@@ -62,5 +62,7 @@ public interface ITripService {
 	List<Maintenence> readByTripPriorityAndTripName(Priority priority,String tripname);
 
 	List<Maintenence> readByTripOwnerAndTripStatus(String tripowner,Status status);
+	
+	List<Maintenence> readByTripId(int tripId);
 
 }

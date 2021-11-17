@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.resources.model.Workers;
 import com.resources.service.IWorkersService;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/workers-service")
 public class WorkersController {
 	@Autowired
@@ -77,9 +79,9 @@ public class WorkersController {
 	}
 	
 	@GetMapping("/workers/assignworkers/taskId/{taskId}/workersId/{workersId}")
-	ResponseEntity<String> assignWorkersToTask(@PathVariable("taskId") int taskId, @PathVariable("workersId") int workersId){
+	ResponseEntity<Void> assignWorkersToTask(@PathVariable("taskId") int taskId, @PathVariable("workersId") int workersId){
 		workersService.assignWorkersToTask(taskId, workersId);
-	return	ResponseEntity.ok().body("Assigned");
+	return	ResponseEntity.ok().build();
 		
 	}
 	

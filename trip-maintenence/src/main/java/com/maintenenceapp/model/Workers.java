@@ -1,4 +1,4 @@
-package com.resources.model;
+package com.maintenenceapp.model;
 
 import java.time.LocalDate;
 
@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +39,6 @@ public class Workers {
 	@Enumerated(EnumType.STRING)
 	private Available availability;
 	@OneToOne
-	
 	@JoinColumn(name = "task_id")
 	Task task;
 	

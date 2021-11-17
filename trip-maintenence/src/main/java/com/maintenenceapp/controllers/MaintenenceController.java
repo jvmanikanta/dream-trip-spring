@@ -1,9 +1,10 @@
-package com.mainteneceapp.controllers;
+package com.maintenenceapp.controllers;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,15 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mainteneceapp.exceptions.MaintenenceNotFoundException;
-import com.mainteneceapp.model.Maintenence;
-import com.mainteneceapp.model.Priority;
-import com.mainteneceapp.model.Status;
-import com.mainteneceapp.model.Task;
-import com.mainteneceapp.service.IMaintenenceService;
+import com.maintenenceapp.model.Maintenence;
+import com.maintenenceapp.model.Priority;
+import com.maintenenceapp.model.Status;
+import com.maintenenceapp.model.Task;
+import com.maintenenceapp.service.IMaintenenceService;
 
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/maintenence-service")
 /**
  * 
@@ -44,7 +44,10 @@ public class MaintenenceController {
 	 */
 	@PostMapping("/maintenence")
 	public ResponseEntity<Maintenence> addMaintenence(@RequestBody Maintenence maintenence) {
-		return ResponseEntity.ok(maintenenceService.addMaintenence(maintenence));
+		HttpHeaders headers = new HttpHeaders();
+		//headers.set("Access-Control-Allow-Origin", "*");
+		headers.set("Access-Control-Allow-Methods", "POST,OPTIONS,DELETE,PUT");
+		return ResponseEntity.ok().headers(headers).body(maintenenceService.addMaintenence(maintenence));
 	}
 	
 	/**
@@ -166,7 +169,9 @@ public class MaintenenceController {
 	 */
 	@GetMapping("maintenence/task/assigntask/maintenenceId/{maintenenceId}/taskId/{taskId}")
 	public ResponseEntity<String> assingTaskToMaintenence(@PathVariable("maintenenceId") int maintenenceId, @PathVariable("taskId")int taskId){
-		return ResponseEntity.ok(maintenenceService.assingTasktoMaintenence(maintenenceId, taskId));
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS,DELETE,PUT");
+		return ResponseEntity.ok().headers(headers).body(maintenenceService.assingTasktoMaintenence(maintenenceId, taskId));
 	}
 	
 	/**
@@ -199,6 +204,11 @@ public class MaintenenceController {
 	@GetMapping("maintenence/tripName/{tripName}")
 	public ResponseEntity<List<Maintenence>> getMainteneceByTrip(@PathVariable("tripName")String tripName){
 		return ResponseEntity.ok(maintenenceService.getMainteneceByTrip(tripName));
+	}
+	
+	@GetMapping("maintenence/tasks/maintenenceId/{maintenenceId}")
+	public List<Task> getTasksByMaintenenceId(@PathVariable("maintenenceId") int maintenenceId){
+		return maintenenceService.getTasksByMaintenenceId(maintenenceId);
 	}
 	
 	/**

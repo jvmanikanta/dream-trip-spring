@@ -182,5 +182,13 @@ public class ITripServiceImpl implements ITripService {
 		ResponseEntity<List> maintenencelist = restTemplate.getForEntity(url, List.class);
 		return maintenencelist.getBody();
 	}
+	
+	@Override
+	public List<Maintenence> readByTripId(int tripId) {
+		String url=BASEURL+"/maintenence/tripId/"+tripId;
+		ResponseEntity<List> maintenencelist=restTemplate.getForEntity(url, List.class);
+		return maintenencelist.getBody();
+	}
+
 
 }
